@@ -5,20 +5,11 @@ import numpy as np
 import joblib
 
 # ==============================
-# 🔹 Load Model & Data Safely
+# 🔹 Load Model & Data
 # ==============================
-reg_model_path = check_file("crime_rate_best_model.pkl")
-city_mean_path = check_file("city_mean_rate.pkl")
-pop_path = check_file("population.csv")
-
-reg_model = joblib.load(reg_model_path)
-city_mean_rate = joblib.load(city_mean_path)
-pop_df = pd.read_csv(pop_path)
-
-# ==============================
-# 🔹 Debug: List files in folder
-# ==============================
-st.write("📂 Current folder files:", os.listdir())
+reg_model = joblib.load("crime_rate_best_model.pkl")
+city_mean_rate = joblib.load("city_mean_rate.pkl")
+pop_df = pd.read_csv("population.csv")
 
 # ==============================
 # 🎨 Page Config
@@ -126,11 +117,7 @@ if st.button("🔍 Predict Crime Rate", use_container_width=True):
     input_df = input_df.reindex(columns=reg_model.feature_names_in_, fill_value=0)
 
     # Predict crime rate
-    try:
-        pred_rate = reg_model.predict(input_df)[0]
-    except Exception as e:
-        st.error(f"❌ Prediction failed: {e}")
-        st.stop()
+    pred_rate = reg_model.predict(input_df)[0]
 
     # Population lookup
     pop = pop_df.loc[pop_df["City"] == city, "Population"]
@@ -160,4 +147,3 @@ if st.button("🔍 Predict Crime Rate", use_container_width=True):
     c3.markdown(f"<div class='metric-box'><h3 style='color:{color};'>{level}</h3><p>Area Safety Level</p></div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
-
