@@ -8,7 +8,7 @@ import joblib
 # ==============================
 reg_model = joblib.load("crime_rate_best_model.pkl")
 city_mean_rate = joblib.load("city_mean_rate.pkl")
-pop_df = pd.read_csv("D:/crime_rate_prediction/population.csv")
+pop_df = pd.read_csv("population.csv")
 
 # ==============================
 # 🎨 Page Config
@@ -133,4 +133,5 @@ if st.button("🔍 Predict Crime Rate", use_container_width=True):
     c3.markdown(f"<div class='metric-box'><h3 style='color:{color};'>{level}</h3><p>Area Safety Level</p></div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
